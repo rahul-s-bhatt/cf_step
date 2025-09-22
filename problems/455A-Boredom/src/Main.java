@@ -23,21 +23,25 @@ public class Main {
         int n = fs.nextInt();
         // out.println(n);
         int[] seq = fs.nextIntArray(n);
-        int[] dp = new int[n+1];
-        int[] sum = new int[n+1];
-        int[] freq = new int[n+1];
+        int maxA = 0;
+        for (int s : seq) if (s > maxA) maxA = s;
+        
+        int[] freq = new int[maxA+1];
+        long[] dp = new long[maxA+1];
+        long[] sum = new long[maxA+1];
         // printArray(out, seq);
         for(int s : seq){ freq[s] += 1; }
         // printArray(out, freq);
-        for(int s : seq){ sum[s] = s * freq[s]; }
+        for(int v=0;v<=maxA; v++){ sum[v] = (long) v * freq[v]; }
         // printArray(out, sum);
 
         dp[0] = 0;
-        for(int i=1; i<=n; i++){
+        if(maxA >= 1) dp[1] = sum[1];
+        for(int i=2; i<=maxA; i++){
             // skip, take (can't take previous, so best upto previous - 1)
-            dp[i] = Math.max(dp[i-1], sum[i] + dp[i >= 2 ? i-2 : 0]);
+            dp[i] = Math.max(dp[i-1], sum[i] + dp[i-2]);
         }
-        out.println(dp[n]);
+        out.println(dp[maxA]);
         // ---------- problem code ends here ----------
         out.flush();
     }
