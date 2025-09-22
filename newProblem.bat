@@ -25,9 +25,9 @@ type nul > "%TARGET%\output.txt"
   echo cd /d "%%~dp0"
   echo if not exist out mkdir out
   echo javac -d out src\*.java
-  echo if errorlevel 1 echo Compilation failed && pause && exit /b 1
+  echo if errorlevel 1 echo Compilation failed ^&^& pause ^&^& exit /b 1
   echo java -cp out Main ^< input.txt
-  echo echo.
+  echo.
   echo echo Press any key to close...
   echo pause
 ) > "%TARGET%\run.bat"

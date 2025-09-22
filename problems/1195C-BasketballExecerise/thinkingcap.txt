@@ -1,0 +1,40 @@
+2 * n students
+2 rows
+
+Rules of choosing:
+1) choosen player index > previously choosen player (exc. first one taken)
+2) choosen player cannot be same row as previous chosen player
+3) A team consists of any no. of students
+
+Answer => To maximize total hts of all chosen students
+
+Now given its arbitary choice system & maximize answer, it requires dynamic programming.
+
+Step 1: Try out the example:
+students = 5
+row 1 = 9 3 5 7 3
+row 2 = 5 8 1 4 5
+
+expected output = 29
+
+iteration 1: we can choose any from 2*n students, choose maximum one?
+- 9 ie from Row 1
+
+iteration 2: cannot pick from row 1 and index to choose from must be strictly greater than 0
+- 8 ie from Row 2
+
+iteration 3: cannot pick from row 2 and index to choose from must be strictly greater than 1
+- 7 ie from Row 1
+
+iteration 4: cannot pick from row 1 and index to choose from must be strictly greater than 3
+- 5 ie from Row 2
+
+total = 9 + 8 + 7 + 5 = 29
+
+
+okay, so are we able to pattern recognize here to a dp recurrence?
+- at each iteration I was trying to find max element and pick that (this will fail and is suboptimal)
+
+- so each step => find max of total ht of choosen student at that index?
+
+- 

@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    private static int INF = (int) 1e9;
     public static void main(String[] args) throws Exception {
         // If input.txt exists in the same folder, read it (local testing).
         // On Codeforces the file won't exist, so it will read from System.in.
@@ -20,30 +21,36 @@ public class Main {
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), false);
 
         // ---------- problem code starts here ----------
-        int n = fs.nextInt();
-        // out.println(n);
-        int[] seq = fs.nextIntArray(n);
-        int maxA = 0;
-        for (int s : seq) if (s > maxA) maxA = s;
-        
-        int[] freq = new int[maxA+1];
-        long[] dp = new long[maxA+1];
-        long[] sum = new long[maxA+1];
-        // printArray(out, seq);
-        for(int s : seq){ freq[s] += 1; }
-        // printArray(out, freq);
-        for(int v=0;v<=maxA; v++){ sum[v] = (long) v * freq[v]; }
-        // printArray(out, sum);
-
-        dp[0] = 0;
-        if(maxA >= 1) dp[1] = sum[1];
-        for(int i=2; i<=maxA; i++){
-            // skip, take (can't take previous, so best upto previous - 1)
-            dp[i] = Math.max(dp[i-1], sum[i] + dp[i-2]);
+        int days = fs.nextInt();
+        int[] activities = fs.nextIntArray(days);
+        int[][] dp = new int[days][3];
+        for (int i = 0; i < days; i++) {
+            Arrays.fill(dp[i], INF);
         }
-        out.println(dp[maxA]);
+
+        
+        // base case: day 0
+        // rest always possible
+        dp[0][0] = 1;
+        dp[0][1] = isGymAllowed(activities[0]) ? 0 : INF; 
+        dp[0][2] = isContestAllowed(activities[0]) ? 0 : INF; 
+
+        for(int i = 1; i<days; i++){
+            // rest
+            dp[i][0] = 1 + min3(dp[i-1][0], dp[i-1][1],dp[i-1][2]); // all three actions allowed
+            dp[i][1] = isGymAllowed(activities[i]) ? 0 + Math.min(dp[i-1][0], dp[i-1][2]) : INF; // rest & contest allowed
+            dp[i][2] = isContestAllowed(activities[i]) ? 0 + Math.min(dp[i-1][0], dp[i-1][1]) : INF; // rest & gym allowed
+        }
+        int ans = min3(dp[days-1][0], dp[days-1][1], dp[days-1][2]);
+        out.println(ans);
         // ---------- problem code ends here ----------
         out.flush();
+    }
+
+    public static boolean isGymAllowed(int n){ return n == 2 || n == 3; }
+    public static boolean isContestAllowed(int n){ return n == 1 || n == 3; }
+    public static int min3(int a, int b, int c){
+        return Math.min(a, Math.min(b, c));
     }
 
         // Print int[] as space-separated
