@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug (Launch) - Main",
+      "request": "launch",
+      "mainClass": "Main",
+      "preLaunchTask": "Build Java (active file folder)",
+      "console": "integratedTerminal",
+      "cwd": "${fileDirname}",
+      "classPaths": [
+        "${fileDirname}/../out"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "Run (No Debug) - Main",
+      "request": "launch",
+      "mainClass": "Main",
+      "preLaunchTask": "Build Java (active file folder)",
+      "console": "integratedTerminal",
+      "cwd": "${fileDirname}",
+      "classPaths": [
+        "${fileDirname}/../out"
+      ]
+    },
+    {
+      "name": "Run via CMD (redirect input -> output)",
+      "type": "pwa-node",
+      "request": "launch",
+      "program": "cmd.exe",
+      "args": [
+        "/C",
+        "java -cp ..\\out Main < input.txt > output.txt"
+      ],
+      "preLaunchTask": "Build Java (active file folder)",
+      "cwd": "${fileDirname}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}

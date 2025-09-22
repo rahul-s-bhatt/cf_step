@@ -1,0 +1,59 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Java (active file folder)",
+      "type": "shell",
+      "command": "if not exist ..\\out mkdir ..\\out && javac --release 21 -d ..\\out *.java && java -cp ..\\out Main < input.txt",
+      "options": {
+        "cwd": "${fileDirname}",
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "problemMatcher": [
+        "$javac"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build and Run Java (with input.txt)",
+      "type": "shell",
+      "command": "if not exist ..\\out mkdir ..\\out && javac -d ..\\out *.java && java -cp ..\\out Main < input.txt",
+      "options": {
+        "cwd": "${fileDirname}",
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build and Run Java (redirect to output.txt)",
+      "type": "shell",
+      "command": "if not exist ..\\out mkdir ..\\out && javac -d ..\\out *.java && java -cp ..\\out Main < input.txt > output.txt",
+      "options": {
+        "cwd": "${fileDirname}",
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "problemMatcher": []
+    }
+  ]
+}
