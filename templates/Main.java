@@ -46,7 +46,15 @@ public class Main {
         out.flush();
     }
 
-        // Print int[] as space-separated
+    public static int max3(int a, int b, int c){
+        return Math.max(a, Math.max(b, c));
+    }
+
+    public static int min3(int a, int b, int c){
+        return Math.min(a, Math.min(b, c));
+    }
+
+    // Print int[] as space-separated
     public static void printArray(PrintWriter out, int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             if (i > 0) out.print(" ");

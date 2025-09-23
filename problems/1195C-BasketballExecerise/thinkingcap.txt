@@ -3,7 +3,7 @@
 
 Rules of choosing:
 1) choosen player index > previously choosen player (exc. first one taken)
-2) choosen player cannot be same row as previous chosen player
+2) choosen player cannot be in the same row as previous chosen player
 3) A team consists of any no. of students
 
 Answer => To maximize total hts of all chosen students
@@ -37,4 +37,25 @@ okay, so are we able to pattern recognize here to a dp recurrence?
 
 - so each step => find max of total ht of choosen student at that index?
 
-- 
+pick a[i] from row1 then next must be from b[i+1], this is the recurrence we must follow.
+
+do this for all combinations and get max.
+
+- we skip or take,
+- if we skip from row1, we have row2 only
+- if we skip from row2, we have row1 only.
+- we can only take 1 (we should pick max one)
+
+recurrence:
+curr_row => 1, 2 (0 , 1 respectively)
+
+dp[0] = max(row1[0], row2[0])
+curr_row = if row1[0] >= row2[0] ? 0 : 1
+
+// if curr_row = 1, then we pick from row
+loop from 1 till 2*n
+// now we have to pick from next_row only
+next_row = curr_row == 0 ? 1 : 0
+dp[i] = dp[i-1] + row1[i]
+
+uterly garbage thinking, it is the same as vactions problem.

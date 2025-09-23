@@ -21,32 +21,35 @@ public class Main {
 
         // ---------- problem code starts here ----------
         int n = fs.nextInt();
-        // out.println(n);
-        int[] seq = fs.nextIntArray(n);
-        int maxA = 0;
-        for (int s : seq) if (s > maxA) maxA = s;
-        
-        int[] freq = new int[maxA+1];
-        long[] dp = new long[maxA+1];
-        long[] sum = new long[maxA+1];
-        // printArray(out, seq);
-        for(int s : seq){ freq[s] += 1; }
-        // printArray(out, freq);
-        for(int v=0;v<=maxA; v++){ sum[v] = (long) v * freq[v]; }
-        // printArray(out, sum);
-
-        dp[0] = 0;
-        if(maxA >= 1) dp[1] = sum[1];
-        for(int i=2; i<=maxA; i++){
-            // skip, take (can't take previous, so best upto previous - 1)
-            dp[i] = Math.max(dp[i-1], sum[i] + dp[i-2]);
+        int[] top = fs.nextIntArray(n);
+        int[] bottom = fs.nextIntArray(n);
+        int[][] dp = new int[n][3];
+        for(int i=0;i<n;i++){
+            Arrays.fill(dp[i], 0);
         }
-        out.println(dp[maxA]);
+        dp[0][0] = top[0];
+        dp[0][1] = bottom[0];
+        dp[0][2] = 0;
+        for(int i=1;i<n;i++){
+            dp[i][0] = Math.max(dp[i-1][1], dp[i-i][2]) + top[i];
+            dp[i][1] = Math.max(dp[i-1][0], dp[i-i][2]) + bottom[i];
+            dp[i][2] = max3(dp[i-1][0], dp[i-1][1], dp[i-i][2]);
+        }
+        int max = max3(dp[n-1][0], dp[n-1][1], dp[n-1][2]);
+        out.println(max);
         // ---------- problem code ends here ----------
         out.flush();
     }
 
-        // Print int[] as space-separated
+    public static int max3(int a, int b, int c){
+        return Math.max(a, Math.max(b, c));
+    }
+
+    public static int min3(int a, int b, int c){
+        return Math.min(a, Math.min(b, c));
+    }
+
+    // Print int[] as space-separated
     public static void printArray(PrintWriter out, int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             if (i > 0) out.print(" ");
