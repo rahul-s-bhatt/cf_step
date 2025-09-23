@@ -23,7 +23,7 @@ public class Main {
         int n = fs.nextInt();
         int[] top = fs.nextIntArray(n);
         int[] bottom = fs.nextIntArray(n);
-        int[][] dp = new int[n][3];
+        long[][] dp = new long[n][3];
         for(int i=0;i<n;i++){
             Arrays.fill(dp[i], 0);
         }
@@ -31,17 +31,20 @@ public class Main {
         dp[0][1] = bottom[0];
         dp[0][2] = 0;
         for(int i=1;i<n;i++){
-            dp[i][0] = Math.max(dp[i-1][1], dp[i-i][2]) + top[i];
-            dp[i][1] = Math.max(dp[i-1][0], dp[i-i][2]) + bottom[i];
-            dp[i][2] = max3(dp[i-1][0], dp[i-1][1], dp[i-i][2]);
+            // pick max(previous bottom or prev none) 
+            dp[i][0] = Math.max(dp[i-1][1], dp[i-1][2]) + top[i];
+            // pick max(previous top or prev none) 
+            dp[i][1] = Math.max(dp[i-1][0], dp[i-1][2]) + bottom[i];
+            // pick max(previous top or prev bottom or prev none) 
+            dp[i][2] = max3(dp[i-1][0], dp[i-1][1], dp[i-1][2]);
         }
-        int max = max3(dp[n-1][0], dp[n-1][1], dp[n-1][2]);
+        long max = max3(dp[n-1][0], dp[n-1][1], dp[n-1][2]);
         out.println(max);
         // ---------- problem code ends here ----------
         out.flush();
     }
 
-    public static int max3(int a, int b, int c){
+    public static long max3(long a, long b, long c){
         return Math.max(a, Math.max(b, c));
     }
 
