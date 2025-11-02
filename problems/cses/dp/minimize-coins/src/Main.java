@@ -21,28 +21,23 @@ public class Main {
 
         // ---------- problem code starts here ----------
         int MOD = 1000000007; // 10^9 + 7
-        int n = fs.nextInt();
-        // out.println(n);
-        int[] seq = fs.nextIntArray(n);
-        int maxA = 0;
-        for (int s : seq) if (s > maxA) maxA = s;
-        
-        int[] freq = new int[maxA+1];
-        long[] dp = new long[maxA+1];
-        long[] sum = new long[maxA+1];
-        // printArray(out, seq);
-        for(int s : seq){ freq[s] += 1; }
-        // printArray(out, freq);
-        for(int v=0;v<=maxA; v++){ sum[v] = (long) v * freq[v]; }
-        // printArray(out, sum);
+        int INF = Integer.MAX_VALUE / 2;  // safer to avoid overflow
+        int[] nx = fs.nextIntArray(2);
+        int n = nx[0], x = nx[1];
+        int[] coins = fs.nextIntArray(n);
 
-        dp[0] = 0;
-        if(maxA >= 1) dp[1] = sum[1];
-        for(int i=2; i<=maxA; i++){
-            // skip, take (can't take previous, so best upto previous - 1)
-            dp[i] = Math.max(dp[i-1], sum[i] + dp[i-2]);
+        int[] dp = new int[x + 1];
+        Arrays.fill(dp, INF);
+        dp[0] = 0; // base case
+
+        for (int c : coins) {
+            for (int s = c; s <= x; s++) {
+                dp[s] = Math.min(dp[s], dp[s - c] + 1);
+            }
         }
-        out.println(dp[maxA]);
+
+        out.println(dp[x] == INF ? -1 : dp[x]);
+
         // ---------- problem code ends here ----------
         out.flush();
     }

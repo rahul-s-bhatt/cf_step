@@ -19,30 +19,22 @@ public class Main {
 
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), false);
 
-        // ---------- problem code starts here ----------
         int MOD = 1000000007; // 10^9 + 7
+        // ---------- problem code starts here ----------
         int n = fs.nextInt();
-        // out.println(n);
-        int[] seq = fs.nextIntArray(n);
-        int maxA = 0;
-        for (int s : seq) if (s > maxA) maxA = s;
-        
-        int[] freq = new int[maxA+1];
-        long[] dp = new long[maxA+1];
-        long[] sum = new long[maxA+1];
-        // printArray(out, seq);
-        for(int s : seq){ freq[s] += 1; }
-        // printArray(out, freq);
-        for(int v=0;v<=maxA; v++){ sum[v] = (long) v * freq[v]; }
-        // printArray(out, sum);
-
-        dp[0] = 0;
-        if(maxA >= 1) dp[1] = sum[1];
-        for(int i=2; i<=maxA; i++){
-            // skip, take (can't take previous, so best upto previous - 1)
-            dp[i] = Math.max(dp[i-1], sum[i] + dp[i-2]);
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+        for(int i=1; i<=n; i++){
+            int ways = 0;
+            // dp[i] = sum (dp[i-1], dp[i-2]..dp[i-6]) all six possible 
+            for(int k=1; k<=6; k++){
+                if(i-k >= 0){
+                    ways = (ways + dp[i-k]) % MOD;
+                }
+            }
+            dp[i] = ways;
         }
-        out.println(dp[maxA]);
+        out.println(dp[n]);
         // ---------- problem code ends here ----------
         out.flush();
     }

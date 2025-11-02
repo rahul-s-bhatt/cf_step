@@ -20,29 +20,12 @@ public class Main {
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), false);
 
         // ---------- problem code starts here ----------
-        int MOD = 1000000007; // 10^9 + 7
-        int n = fs.nextInt();
-        // out.println(n);
-        int[] seq = fs.nextIntArray(n);
-        int maxA = 0;
-        for (int s : seq) if (s > maxA) maxA = s;
-        
-        int[] freq = new int[maxA+1];
-        long[] dp = new long[maxA+1];
-        long[] sum = new long[maxA+1];
-        // printArray(out, seq);
-        for(int s : seq){ freq[s] += 1; }
-        // printArray(out, freq);
-        for(int v=0;v<=maxA; v++){ sum[v] = (long) v * freq[v]; }
-        // printArray(out, sum);
-
-        dp[0] = 0;
-        if(maxA >= 1) dp[1] = sum[1];
-        for(int i=2; i<=maxA; i++){
-            // skip, take (can't take previous, so best upto previous - 1)
-            dp[i] = Math.max(dp[i-1], sum[i] + dp[i-2]);
+        int t = fs.nextInt();
+        while(t-- > 0){
+            int n = fs.nextInt();
+            int[] arr = fs.nextIntArray(n);
         }
-        out.println(dp[maxA]);
+        // out.println(n);
         // ---------- problem code ends here ----------
         out.flush();
     }
